@@ -92,10 +92,11 @@ function App() {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <span className="badge">Full-Stack Engineer</span>
-            <h1>Engineering AI products that feel <span className="highlight">useful, fast, and human.</span></h1>
+            <h1>I build AI products that feel <span className="highlight">intuitive, fast, and easy to use.</span></h1>
             <p className="hero-sub">
-              I build full-stack systems across AI agents, data-heavy interfaces, and cloud
-              infrastructure, turning complex workflows into polished products people can trust.
+              I'm a full-stack engineer who loves turning complex data into clean, trustworthy experiences. 
+              Whether it's an AI agent or cloud infrastructure, I focus on the small details that make 
+              software actually feel good to use.
             </p>
             <div className="hero-actions">
               <a href="#projects" className="btn btn-primary">View Projects</a>
