@@ -1,6 +1,6 @@
 # Hi, I'm Jiawen 👋
 
-I'm a full-stack engineer building AI products, data-heavy interfaces, and cloud systems that feel intuitive, fast, and useful.
+I'm a full-stack engineer building AI products, data-heavy interfaces, and cloud systems that feel intuitive, fast, and easy to use.
 
 I'm the creator of **<a href="https://github.com/JiawenZhu/CareerVivid" target="_blank">CareerVivid</a>**, an AI-powered career platform for resume building, portfolio publishing, job tracking, interview prep, and personal branding.
 
