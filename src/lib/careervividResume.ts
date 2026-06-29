@@ -88,3 +88,47 @@ export async function fetchCareerVividResume(options?: {
 
   return response.json() as Promise<CareerVividResume>;
 }
+
+export async function downloadCareerVividResumePdf(userId: string, resumeId: string): Promise<void> {
+  const response = await fetch("https://us-west1-jastalk-firebase.cloudfunctions.net/generateResumePdfHttp", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      userId,
+      resumeId,
+    }),
+  });
+
+  if (!response.ok) {
+    let message = `Failed to generate resume PDF. Status: ${response.status}`;
+    try {
+      const body = await response.json();
+      if (body?.error) message = body.error;
+    } catch {
+      // ignore
+    }
+    throw new Error(message);
+  }
+
+  const blob = await response.blob();
+  const url = window.URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  
+  const contentDisposition = response.headers.get("Content-Disposition");
+  let filename = `resume_${resumeId}.pdf`;
+  if (contentDisposition) {
+    const match = contentDisposition.match(/filename="?([^"]+)"?/);
+    if (match && match[1]) {
+      filename = match[1];
+    }
+  }
+  link.setAttribute("download", filename);
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.URL.revokeObjectURL(url);
+}
+

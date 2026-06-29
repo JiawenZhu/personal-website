@@ -1,9 +1,10 @@
 import { useEffect, useState, type ReactNode } from "react";
-import { AlertCircle, BriefcaseBusiness, ExternalLink, Loader2, MapPin } from "lucide-react";
+import { AlertCircle, BriefcaseBusiness, ExternalLink, FileDown, Loader2, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
 import {
   type CareerVividResume,
   fetchCareerVividResume,
+  downloadCareerVividResumePdf,
 } from "../lib/careervividResume";
 
 type ResumeState =
@@ -46,6 +47,22 @@ export function Experience() {
     data: null,
     error: null,
   });
+
+  const [downloadState, setDownloadState] = useState<"idle" | "loading" | "error">("idle");
+  const [downloadError, setDownloadError] = useState<string | null>(null);
+
+  const handleDownloadPdf = async (userId: string, resumeId: string) => {
+    setDownloadState("loading");
+    setDownloadError(null);
+    try {
+      await downloadCareerVividResumePdf(userId, resumeId);
+      setDownloadState("idle");
+    } catch (err: any) {
+      setDownloadState("error");
+      setDownloadError(err.message || "Failed to download resume PDF.");
+    }
+  };
+
 
   useEffect(() => {
     const controller = new AbortController();
@@ -123,15 +140,50 @@ export function Experience() {
             <div className="experience-summary-card">
               <div className="experience-summary-label">Profile Snapshot</div>
               <p>{renderInlineStrong(resumeState.data.profile.summary)}</p>
-              <a
-                className="resume-builder-link"
-                href="https://careervivid.app/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <span>Create your own AI resume</span>
-                <ExternalLink size={15} aria-hidden="true" />
-              </a>
+              <div className="experience-summary-actions">
+                <a
+                  className="resume-builder-link"
+                  href="https://careervivid.app/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span>Create your own AI resume</span>
+                  <ExternalLink size={15} aria-hidden="true" />
+                </a>
+                <button
+                  className="resume-download-btn"
+                  onClick={() => handleDownloadPdf(resumeState.data.userId, resumeState.data.id)}
+                  disabled={downloadState === "loading"}
+                >
+                  {downloadState === "loading" ? (
+                    <>
+                      <Loader2 className="status-icon spinning" size={15} aria-hidden="true" />
+                      <span>Generating PDF...</span>
+                    </>
+                  ) : (
+                    <>
+                      <FileDown size={15} aria-hidden="true" />
+                      <span>Download Resume (PDF)</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {downloadState === "error" && downloadError && (
+                <div className="download-error-notice" role="alert">
+                  <span>{downloadError}</span>
+                  <button
+                    className="dismiss-error-btn"
+                    onClick={() => {
+                      setDownloadState("idle");
+                      setDownloadError(null);
+                    }}
+                    aria-label="Dismiss error"
+                  >
+                    &times;
+                  </button>
+                </div>
+              )}
             </div>
 
             <div className="experience-skill-list" aria-label="Core skills">
