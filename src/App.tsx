@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Mail, ExternalLink, ChevronDown, Code, Database, Sparkles, Globe, Monitor, Moon, Sun } from 'lucide-react'
+import { Mail, ChevronDown, Code, Database, Sparkles, Gamepad2, Monitor, Moon, Sun, ArrowUpRight } from 'lucide-react'
 import { Experience } from './components/Experience'
+import { ProjectCard } from './components/ProjectCard'
+import { Reveal } from './components/Reveal'
 import './App.css'
 
 const Github = ({ size = 20 }: { size?: number }) => (
@@ -130,13 +132,29 @@ function App() {
 
         {/* Projects Section */}
         <section id="projects" className="section container">
-          <div className="section-header">
+          <Reveal className="section-header">
             <h2>Technical Implementations</h2>
             <p>Deep-dives into algorithmic complexity and system architecture.</p>
-          </div>
+          </Reveal>
 
           <div className="projects-grid">
-            <ProjectCard 
+            <ProjectCard
+              index={0}
+              featured
+              title="CCAF Quest"
+              description="A walkable 3D city that turns Claude Certified Architect exam prep into a mission game. 45 missions across 5 exam domains, each anchored to a real building — walk in, take the briefing, answer, earn XP. Readiness is weighted by each domain's true share of the exam."
+              tags={["Three.js", "React", "WebGL", "Game Design", "Learning"]}
+              demoLink="https://careervivid.app/learning/ccaf-quest"
+              demoLabel="Play the City"
+              icon={<Gamepad2 size={24} />}
+              image={assetUrl('project-screenshots/ccaf-quest.png')}
+              imageAlt="CCAF Quest 3D city with a player character walking toward a glowing mission beacon"
+              metrics={{ missions: "45 across 5 domains", engine: "Three.js r182" }}
+            >
+              <DomainMeter />
+            </ProjectCard>
+            <ProjectCard
+              index={1}
               title="MegaMillions Engine"
               description="A high-performance statistical engine that processes historical lottery data using weighted sampling and recency decay algorithms to generate composite scores for predictive modeling."
               tags={["TypeScript", "Algorithms", "Statistics", "Data Processing"]}
@@ -148,18 +166,20 @@ function App() {
             >
               <AlgorithmPreview />
             </ProjectCard>
-            <ProjectCard 
+            <ProjectCard
+              index={2}
               title="CareerVivid"
-              description="A full-stack career management ecosystem. Features real-time job synchronization, AI-parsed resume tailoring, and a robust Node.js CLI for automated career operations."
-              tags={["React", "Firebase", "Node.js", "CLI", "Automation"]}
+              description="A full-stack career platform that rehearses the whole job hunt. Mock interviews replay the real staged loop for 301 companies, a 12-course curriculum runs 203 hands-on lessons, and AI-parsed resume tailoring plus a Node.js CLI automate the paperwork around it."
+              tags={["React", "Firebase", "Vertex AI", "Node.js", "CLI"]}
               repoLink="https://github.com/JiawenZhu/CareerVivid"
               demoLink="https://careervivid.app"
               icon={<Code size={24} />}
               image={assetUrl('project-screenshots/careervivid.png')}
-              imageAlt="CareerVivid landing page showing AI job search automation"
-              metrics={{ users: "Hundreds", backend: "Firebase + Vertex AI" }}
+              imageAlt="CareerVivid interview quests page listing staged interview loops for Google, Amazon, Meta, and other companies"
+              metrics={{ companies: "301 interview loops", backend: "Firebase + Vertex AI" }}
             />
-            <ProjectCard 
+            <ProjectCard
+              index={3}
               title="TeamUSA Gemini Analyst"
               description="Analytical platform for athletic performance. Integrates Gemini AI for archetype classification and provides data visualizations for competitive intelligence."
               tags={["Gemini AI", "Data Analytics", "React", "Competitive Intel"]}
@@ -176,7 +196,7 @@ function App() {
         {/* Technical Expertise Section */}
         <section className="section container">
           <div className="grid-2">
-            <div className="expertise-text">
+            <Reveal className="expertise-text">
               <h2>Technical Expertise</h2>
               <p>Specializing in building robust, scalable applications with a focus on data integrity and algorithmic efficiency.</p>
               <div className="skills-grid">
@@ -199,8 +219,8 @@ function App() {
                   </ul>
                 </div>
               </div>
-            </div>
-            <div className="expertise-visual">
+            </Reveal>
+            <Reveal className="expertise-visual" delay={0.12}>
               {/* Subtle engineered visualization */}
               <div className="code-block-mock">
                 <div className="code-header">
@@ -218,11 +238,39 @@ function App() {
                   </pre>
                 </div>
               </div>
-            </div>
+            </Reveal>
           </div>
         </section>
 
         <Experience />
+
+        {/* Contact Section */}
+        <section id="contact" className="section container">
+          <Reveal className="contact-card">
+            <span className="section-kicker">Get in touch</span>
+            <h2>Let's build something worth using.</h2>
+            <p>
+              I'm open to full-stack and AI product roles, and I always enjoy talking through a hard
+              data or interface problem. The fastest way to reach me is email.
+            </p>
+            <div className="contact-actions">
+              <a className="btn btn-primary" href="mailto:zhujiawen519@gmail.com">
+                <Mail size={18} aria-hidden="true" />
+                <span>zhujiawen519@gmail.com</span>
+              </a>
+              <a className="btn btn-ghost" href="https://github.com/JiawenZhu" target="_blank" rel="noreferrer">
+                <Github size={18} />
+                <span>GitHub</span>
+                <ArrowUpRight size={15} aria-hidden="true" />
+              </a>
+              <a className="btn btn-ghost" href="https://linkedin.com/in/jiawenzhu" target="_blank" rel="noreferrer">
+                <Linkedin size={18} />
+                <span>LinkedIn</span>
+                <ArrowUpRight size={15} aria-hidden="true" />
+              </a>
+            </div>
+          </Reveal>
+        </section>
       </main>
 
       <footer className="footer container">
@@ -264,52 +312,35 @@ function ThemeSwitcher({ value, onChange }: { value: ThemePreference; onChange: 
   )
 }
 
-function ProjectCard({ title, description, tags, repoLink, demoLink, icon, image, imageAlt, metrics, children }: any) {
+/** The five CCA-F exam domains, with each domain's real weight on the exam. */
+const CCAF_DOMAINS = [
+  { id: 'D1', label: 'Agentic Architecture', weight: 27 },
+  { id: 'D2', label: 'Tool Design & MCP', weight: 18 },
+  { id: 'D3', label: 'Claude Code Workflows', weight: 20 },
+  { id: 'D4', label: 'Prompt Engineering', weight: 20 },
+  { id: 'D5', label: 'Context & Reliability', weight: 15 },
+]
+
+function DomainMeter() {
   return (
-    <motion.div 
-      className="project-card"
-      whileHover={{ y: -5 }}
-      transition={{ duration: 0.3 }}
-    >
-      {image && (
-        <div className="project-image-frame">
-          <img src={image} alt={imageAlt || `${title} project screenshot`} loading="lazy" />
+    <div className="domain-meter" aria-label="CCA-F exam domain weighting">
+      {CCAF_DOMAINS.map((domain, index) => (
+        <div className="domain-row" key={domain.id}>
+          <span className="domain-id">{domain.id}</span>
+          <span className="domain-label">{domain.label}</span>
+          <span className="domain-track">
+            <motion.span
+              className="domain-fill"
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: domain.weight / 27 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.8, delay: 0.15 + index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+            />
+          </span>
+          <span className="domain-weight">{domain.weight}%</span>
         </div>
-      )}
-      <div className="project-card-header">
-        <div className="project-icon">{icon}</div>
-        <div className="project-metrics">
-          {metrics && Object.entries(metrics).map(([key, value]: any) => (
-            <div key={key} className="metric">
-              <span className="metric-key">{key}</span>
-              <span className="metric-value">{value}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-      <h3>{title}</h3>
-      <p>{description}</p>
-      {children && <div className="project-custom-content">{children}</div>}
-      <div className="project-tags">
-        {tags.map((tag: string) => (
-          <span key={tag} className="tag">{tag}</span>
-        ))}
-      </div>
-      <div className="project-links">
-        {repoLink && (
-          <a href={repoLink} className="project-link" target="_blank" rel="noreferrer">
-            <span>Engineering Source</span>
-            <ExternalLink size={14} />
-          </a>
-        )}
-        {demoLink && (
-          <a href={demoLink} className="project-link demo" target="_blank" rel="noreferrer">
-            <span>Live Deployment</span>
-            <Globe size={14} />
-          </a>
-        )}
-      </div>
-    </motion.div>
+      ))}
+    </div>
   )
 }
 

@@ -235,20 +235,74 @@
 /* Projects Grid */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  /* Two columns on desktop so four cards land as a clean 2x2 with large previews. */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr));
   gap: 2rem;
+  /* Shared perspective so neighbouring cards tilt in the same visual space. */
+  perspective: 1400px;
+}
+
+/* The shell owns scroll-reveal + perspective; the card owns the 3D tilt. */
+.project-card-shell {
+  position: relative;
+  perspective: 1100px;
 }
 
 .project-card {
-  background: var(--surface-color);
-  border: 1px solid var(--border-color);
-  padding: 1rem;
-  border-radius: 8px;
+  position: relative;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  transition: var(--transition-smooth);
-  position: relative;
-  overflow: hidden;
+  padding: 0.85rem;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  background:
+    linear-gradient(160deg, var(--card-sheen) 0%, transparent 42%),
+    var(--surface-color);
+  box-shadow: var(--card-shadow-rest);
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Top edge catch-light — the main cue that the card is a raised slab. */
+.project-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  border-top: 1px solid var(--card-edge-light);
+  transform: translateZ(0);
+}
+
+.project-card-shell:hover .project-card {
+  border-color: color-mix(in srgb, var(--primary-color) 55%, var(--border-color));
+  box-shadow: var(--card-shadow-hover);
+}
+
+.card-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 3;
+}
+
+.project-card-shell:hover .card-glare {
+  opacity: 1;
+}
+
+.project-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 0 0.75rem 0.4rem;
+  transform-style: preserve-3d;
 }
 
 .project-image-frame {
@@ -256,9 +310,10 @@
   aspect-ratio: 16 / 9;
   margin-bottom: 1.5rem;
   border: 1px solid var(--border-color);
-  border-radius: 6px;
+  border-radius: 10px;
   overflow: hidden;
   background: var(--bg-color);
+  box-shadow: 0 12px 26px -14px var(--shadow-color);
 }
 
 .project-image-frame::after {
@@ -275,59 +330,89 @@
   display: block;
   object-fit: cover;
   object-position: center top;
-  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.project-card:hover .project-image-frame img {
-  transform: scale(1.04);
+.project-card-shell:hover .project-image-frame img {
+  transform: scale(1.05);
 }
 
-.project-card:hover {
-  border-color: var(--primary-color);
-  background: var(--surface-hover);
+.project-flag {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  z-index: 2;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--primary-contrast);
+  background: var(--primary-color);
+  box-shadow: 0 6px 16px -6px color-mix(in srgb, var(--primary-color) 80%, transparent);
+}
+
+.project-card-shell.featured .project-card {
+  border-color: color-mix(in srgb, var(--primary-color) 38%, var(--border-color));
 }
 
 .project-icon {
   color: var(--primary-color);
-  margin-bottom: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--primary-color) 26%, transparent);
+  background: color-mix(in srgb, var(--primary-color) 10%, transparent);
+  flex: 0 0 auto;
 }
 
 .project-card h3 {
   font-size: 1.5rem;
-  margin-bottom: 1rem;
-  padding: 0 1.5rem;
+  margin-bottom: 0.85rem;
 }
 
 .project-card p {
   color: var(--text-dim);
   font-size: 0.95rem;
-  margin-bottom: 2rem;
-  flex-grow: 1;
-  padding: 0 1.5rem;
+  line-height: 1.7;
+  margin-bottom: 1.75rem;
 }
+
 
 .project-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-bottom: 2rem;
-  padding: 0 1.5rem;
+  margin-bottom: 1.75rem;
 }
 
 .tag {
   font-family: var(--font-mono);
   font-size: 0.7rem;
-  padding: 0.2rem 0.6rem;
+  padding: 0.25rem 0.65rem;
   background: var(--accent-color);
+  border: 1px solid transparent;
   color: var(--text-dim);
-  border-radius: 4px;
+  border-radius: 6px;
+  transition: var(--transition-smooth);
+}
+
+.project-card-shell:hover .tag {
+  border-color: color-mix(in srgb, var(--primary-color) 22%, transparent);
+  color: var(--text-main);
 }
 
 .project-links {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
-  padding: 0 1.5rem 1.5rem;
+  margin-top: auto;
+  padding-bottom: 0.75rem;
 }
 
 .project-link {
@@ -350,8 +435,7 @@
 }
 
 .project-custom-content {
-  margin-bottom: 2rem;
-  padding: 0 1.5rem;
+  margin-bottom: 1.75rem;
 }
 
 .algo-preview {
@@ -359,7 +443,7 @@
   gap: 0.5rem;
   padding: 1rem;
   background: color-mix(in srgb, var(--bg-color) 80%, transparent);
-  border-radius: 4px;
+  border-radius: 8px;
   border: 1px solid var(--border-color);
 }
 
@@ -374,13 +458,68 @@
   box-shadow: 0 0 10px var(--primary-color);
 }
 
+/* CCAF Quest domain weighting preview */
+.domain-meter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 0.9rem 1rem;
+  background: color-mix(in srgb, var(--bg-color) 80%, transparent);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.domain-row {
+  display: grid;
+  grid-template-columns: 1.6rem minmax(0, 1fr) 3.5rem 2.2rem;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.domain-id {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--primary-color);
+}
+
+.domain-label {
+  font-size: 0.74rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.domain-track {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--accent-color);
+  overflow: hidden;
+}
+
+.domain-fill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform-origin: left center;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--primary-color), color-mix(in srgb, var(--primary-color) 55%, transparent));
+}
+
+.domain-weight {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-main);
+  text-align: right;
+}
+
 /* Project Card Enhanced */
 .project-card-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 1.5rem;
-  padding: 0 1.5rem;
+  gap: 1rem;
+  margin-bottom: 1.35rem;
 }
 
 .project-metrics {
@@ -407,6 +546,65 @@
   font-size: 0.75rem;
   font-weight: 600;
   color: var(--text-main);
+}
+
+/* Contact */
+.contact-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: clamp(2rem, 5vw, 3.5rem);
+  background:
+    linear-gradient(160deg, var(--card-sheen) 0%, transparent 45%),
+    var(--surface-color);
+  box-shadow: var(--card-shadow-rest);
+}
+
+.contact-card::after {
+  content: "";
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  right: -80px;
+  bottom: -140px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, color-mix(in srgb, var(--primary-color) 16%, transparent), transparent 70%);
+}
+
+.contact-card h2 {
+  font-size: clamp(2rem, 4vw, 2.9rem);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  max-width: 18ch;
+}
+
+.contact-card p {
+  color: var(--text-dim);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  max-width: 56ch;
+  margin-bottom: 2.25rem;
+}
+
+.contact-actions {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.btn-ghost {
+  border: 1px solid var(--border-color);
+  background: color-mix(in srgb, var(--bg-color) 45%, transparent);
+  color: var(--text-main);
+}
+
+.btn-ghost:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  transform: translateY(-2px);
 }
 
 /* Technical Expertise */
@@ -933,24 +1131,15 @@
   }
 
   .project-card {
-    padding: 0.75rem;
+    padding: 0.7rem;
+  }
+
+  .project-card-body {
+    padding: 0 0.5rem 0.25rem;
   }
 
   .project-image-frame {
     margin-bottom: 1.25rem;
-  }
-
-  .project-card-header,
-  .project-card h3,
-  .project-card p,
-  .project-tags,
-  .project-custom-content {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-  }
-
-  .project-links {
-    padding: 0 0.75rem 1rem;
   }
 
   .project-card-header {
@@ -959,11 +1148,16 @@
   }
 
   .project-icon {
-    margin-bottom: 0;
+    width: 2.4rem;
+    height: 2.4rem;
   }
 
   .project-metrics {
     max-width: 60%;
+  }
+
+  .domain-row {
+    grid-template-columns: 1.4rem minmax(0, 1fr) 2.6rem 2rem;
   }
 
   .metric-key {
@@ -1041,18 +1235,8 @@
     aspect-ratio: 1.45 / 1;
   }
 
-  .project-card-header,
-  .project-card h3,
-  .project-card p,
-  .project-tags,
-  .project-custom-content {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-  }
-
-  .project-links {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+  .project-card-body {
+    padding: 0 0.35rem 0.25rem;
   }
 
   .project-links {
