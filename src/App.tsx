@@ -186,7 +186,7 @@ function App() {
               repoLink="https://github.com/JiawenZhu/teamusa-gemini-analyst"
               demoLink="https://teamusa-8b1ba.web.app/"
               icon={<Sparkles size={24} />}
-              image={assetUrl('project-screenshots/teamusa-gemini-analyst.png')}
+              image={assetUrl('project-screenshots/teamusa-gemini-analyst.webp')}
               imageAlt="TeamUSA Gemini Analyst interactive globe with AI coach panel"
               metrics={{ integration: "Gemini Pro", visualizations: "D3.js" }}
             />
