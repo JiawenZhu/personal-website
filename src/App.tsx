@@ -117,8 +117,10 @@ function App() {
             transition={{ delay: 0.15, duration: 0.8, ease: "easeOut" }}
             aria-hidden="true"
           >
-            {/* Above the fold and the LCP element — fetch it ahead of the lazy project shots. */}
-            <img src={assetUrl('hero-google-photo.webp')} alt="" fetchPriority="high" width={843} height={1264} />
+            {/* Above the fold and the LCP element — fetch it ahead of the lazy project shots.
+                No width/height attributes: they are presentational hints that set CSS height,
+                which cancels the aspect-ratio: 0.68/1 crop this image relies on. */}
+            <img src={assetUrl('hero-google-photo.webp')} alt="" fetchPriority="high" />
           </motion.div>
           
           <motion.div 
