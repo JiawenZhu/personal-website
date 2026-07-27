@@ -117,7 +117,8 @@ function App() {
             transition={{ delay: 0.15, duration: 0.8, ease: "easeOut" }}
             aria-hidden="true"
           >
-            <img src={assetUrl('hero-google-photo.png')} alt="" />
+            {/* Above the fold and the LCP element — fetch it ahead of the lazy project shots. */}
+            <img src={assetUrl('hero-google-photo.webp')} alt="" fetchPriority="high" width={843} height={1264} />
           </motion.div>
           
           <motion.div 
@@ -147,7 +148,7 @@ function App() {
               demoLink="https://careervivid.app/learning/ccaf-quest"
               demoLabel="Play the City"
               icon={<Gamepad2 size={24} />}
-              image={assetUrl('project-screenshots/ccaf-quest.png')}
+              image={assetUrl('project-screenshots/ccaf-quest.webp')}
               imageAlt="CCAF Quest 3D city with a player character walking toward a glowing mission beacon"
               metrics={{ missions: "45 across 5 domains", engine: "Three.js r182" }}
             >
@@ -160,7 +161,7 @@ function App() {
               tags={["TypeScript", "Algorithms", "Statistics", "Data Processing"]}
               repoLink="https://github.com/JiawenZhu/megamillions-engine"
               icon={<Database size={24} />}
-              image={assetUrl('project-screenshots/megamillions-engine.png')}
+              image={assetUrl('project-screenshots/megamillions-engine.webp')}
               imageAlt="MegaMillions Engine dashboard showing strategy performance cards and ROI chart"
               metrics={{ complexity: "O(n log n)", performance: "Sub-10ms processing" }}
             >
@@ -174,7 +175,7 @@ function App() {
               repoLink="https://github.com/JiawenZhu/CareerVivid"
               demoLink="https://careervivid.app"
               icon={<Code size={24} />}
-              image={assetUrl('project-screenshots/careervivid.png')}
+              image={assetUrl('project-screenshots/careervivid.webp')}
               imageAlt="CareerVivid interview quests page listing staged interview loops for Google, Amazon, Meta, and other companies"
               metrics={{ companies: "301 interview loops", backend: "Firebase + Vertex AI" }}
             />
