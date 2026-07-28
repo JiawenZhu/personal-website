@@ -147,7 +147,7 @@ function App() {
               title="CCAF Quest"
               description="A walkable 3D city that turns Claude Certified Architect exam prep into a mission game. 45 missions across 5 exam domains, each anchored to a real building — walk in, take the briefing, answer, earn XP. Readiness is weighted by each domain's true share of the exam."
               tags={["Three.js", "React", "WebGL", "Game Design", "Learning"]}
-              demoLink="https://careervivid.app/learning/ccaf-quest"
+              demoLink="https://careervivid.app/learning/"
               demoLabel="Play the City"
               icon={<Gamepad2 size={24} />}
               image={assetUrl('project-screenshots/ccaf-quest.webp')}
