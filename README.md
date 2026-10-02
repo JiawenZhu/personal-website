@@ -18,7 +18,7 @@ Both cards are redrawn every few hours by the Action in [JiawenZhu/JiawenZhu](ht
 ### 🚀 Featured Projects
 
 - **<a href="https://3d-craft.web.app" target="_blank">3D Craft</a>** - AI studio that turns an idea or reference image into concept art and a 3D model you can animate and play. On the <a href="https://apps.apple.com/us/app/3d-craft-ai-3d-model-maker/id6811466883" target="_blank">App Store</a> and the web.
-- **<a href="https://careervivid.app/learning/" target="_blank">CCAF Quest</a>** - Walkable 3D city (Three.js) that turns Claude Certified Architect exam prep into 45 missions across 5 weighted exam domains.
+- **<a href="https://careervivid.app/learning/ccaf-quest" target="_blank">CCAF Quest</a>** - Walkable 3D city (Three.js) that turns Claude Certified Architect exam prep into 45 missions across 5 weighted exam domains.
 - **<a href="https://github.com/JiawenZhu/CareerVivid" target="_blank">CareerVivid</a>** - All-in-one AI career growth platform with resume tooling, AI agents, portfolio publishing, and live public resume data.
 - **<a href="https://github.com/JiawenZhu/megamillions-engine" target="_blank">MegaMillions Engine</a>** - Statistical simulation and strategy dashboard for weighted sampling, draw analysis, and performance tracking.
 - **<a href="https://github.com/JiawenZhu/teamusa-gemini-analyst" target="_blank">TeamUSA Gemini Analyst</a>** - AI-powered sports analytics experience with an interactive globe and Gemini-assisted insights.

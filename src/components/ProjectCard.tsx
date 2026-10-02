@@ -9,8 +9,11 @@ import {
 } from 'framer-motion'
 import { ExternalLink, Globe, Smartphone } from 'lucide-react'
 
-const MAX_TILT = 7
-const springConfig = { stiffness: 220, damping: 24, mass: 0.5 }
+// Kept small on purpose: bigger tilts read as motion and can make people dizzy.
+const MAX_TILT = 2.5
+// Wide cards swing their far edges further for the same angle.
+const MAX_TILT_FEATURED = 1.5
+const springConfig = { stiffness: 160, damping: 26, mass: 0.6 }
 
 export type ProjectCardProps = {
   title: string
@@ -53,8 +56,9 @@ export function ProjectCard({
   const pointerY = useMotionValue(0.5)
 
   // Tilt away from the cursor, so the card reads as a slab being pressed.
-  const rotateX = useSpring(useTransform(pointerY, [0, 1], [-MAX_TILT, MAX_TILT]), springConfig)
-  const rotateY = useSpring(useTransform(pointerX, [0, 1], [MAX_TILT, -MAX_TILT]), springConfig)
+  const tilt = featured ? MAX_TILT_FEATURED : MAX_TILT
+  const rotateX = useSpring(useTransform(pointerY, [0, 1], [-tilt, tilt]), springConfig)
+  const rotateY = useSpring(useTransform(pointerX, [0, 1], [tilt, -tilt]), springConfig)
 
   const glareX = useSpring(useTransform(pointerX, (value) => value * 100), springConfig)
   const glareY = useSpring(useTransform(pointerY, (value) => value * 100), springConfig)
@@ -89,20 +93,20 @@ export function ProjectCard({
       <motion.article
         className="project-card"
         style={reduceMotion ? undefined : { rotateX, rotateY }}
-        whileHover={reduceMotion ? undefined : { scale: 1.015 }}
+        whileHover={reduceMotion ? undefined : { scale: 1.005 }}
         transition={{ type: 'spring', ...springConfig }}
       >
         {!reduceMotion && <motion.div className="card-glare" style={{ background: glare }} aria-hidden="true" />}
 
         {image && (
-          <div className="project-image-frame" style={{ transform: 'translateZ(38px)' }}>
+          <div className="project-image-frame" style={{ transform: 'translateZ(15px)' }}>
             <img src={image} alt={imageAlt || `${title} project screenshot`} loading="lazy" />
             {featured && <span className="project-flag">New</span>}
           </div>
         )}
 
         <div className="project-card-body">
-          <div className="project-card-header" style={{ transform: 'translateZ(26px)' }}>
+          <div className="project-card-header" style={{ transform: 'translateZ(10px)' }}>
             <div className="project-icon">{icon}</div>
             {metrics && (
               <div className="project-metrics">
@@ -116,16 +120,16 @@ export function ProjectCard({
             )}
           </div>
 
-          <h3 style={{ transform: 'translateZ(30px)' }}>{title}</h3>
-          <p style={{ transform: 'translateZ(18px)' }}>{description}</p>
+          <h3 style={{ transform: 'translateZ(12px)' }}>{title}</h3>
+          <p style={{ transform: 'translateZ(7px)' }}>{description}</p>
 
           {children && (
-            <div className="project-custom-content" style={{ transform: 'translateZ(22px)' }}>
+            <div className="project-custom-content" style={{ transform: 'translateZ(9px)' }}>
               {children}
             </div>
           )}
 
-          <div className="project-tags" style={{ transform: 'translateZ(20px)' }}>
+          <div className="project-tags" style={{ transform: 'translateZ(8px)' }}>
             {tags.map((tag) => (
               <span key={tag} className="tag">
                 {tag}
@@ -133,7 +137,7 @@ export function ProjectCard({
             ))}
           </div>
 
-          <div className="project-links" style={{ transform: 'translateZ(28px)' }}>
+          <div className="project-links" style={{ transform: 'translateZ(11px)' }}>
             {repoLink && (
               <a href={repoLink} className="project-link" target="_blank" rel="noreferrer">
                 <span>Source code</span>

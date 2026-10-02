@@ -629,7 +629,7 @@
 }
 
 .project-card-shell:hover .project-card {
-  box-shadow: 12px 14px 0 var(--line);
+  box-shadow: 9px 9px 0 var(--line);
 }
 
 .card-glare {
@@ -675,7 +675,7 @@
 }
 
 .project-card-shell:hover .project-image-frame img {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
 .project-flag {
