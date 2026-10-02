@@ -7,11 +7,13 @@ I'm the creator of **<a href="https://github.com/JiawenZhu/CareerVivid" target="
 🔗 Portfolio: <a href="https://jiawenzhu.github.io/personal-website/" target="_blank">jiawenzhu.github.io/personal-website</a>  
 🚀 CareerVivid: <a href="https://careervivid.app" target="_blank">careervivid.app</a>
 
-### 📊 GitHub Statistics
+### 🧱 What I'm building right now
 
-<p align="left">
-  <img src="https://raw.githubusercontent.com/JiawenZhu/JiawenZhu/main/github-metrics.svg" alt="Jiawen's GitHub Metrics" />
-</p>
+<a href="https://github.com/JiawenZhu"><img src="https://raw.githubusercontent.com/JiawenZhu/JiawenZhu/main/assets/now-building.svg" alt="What I'm building right now" width="100%"></a>
+
+<img src="https://raw.githubusercontent.com/JiawenZhu/JiawenZhu/main/assets/commit-city.svg" alt="My commit city: one block per day of GitHub contributions" width="100%">
+
+Both cards are redrawn every few hours by the Action in [JiawenZhu/JiawenZhu](https://github.com/JiawenZhu/JiawenZhu). The site's hero and commit city read the same `now.json`.
 
 ### 🚀 Featured Projects
 

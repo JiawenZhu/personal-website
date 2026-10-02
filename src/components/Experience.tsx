@@ -87,17 +87,16 @@ export function Experience() {
     <section id="experience" className="section container" aria-labelledby="experience-heading">
       <div className="section-header experience-heading">
         <div>
+          <h2 id="experience-heading">Where I've worked</h2>
           <a
-            className="section-kicker experience-source-link"
+            className="experience-source-link"
             href="https://careervivid.app/"
             target="_blank"
             rel="noreferrer"
-            aria-label="Create your own resume on CareerVivid"
           >
-            <span>Live CareerVivid Resume</span>
+            <span>Pulled live from my CareerVivid resume</span>
             <ExternalLink size={13} aria-hidden="true" />
           </a>
-          <h2 id="experience-heading">Professional Experience</h2>
         </div>
         {resumeState.status === "success" && resumeState.data.updatedAt && (
           <p className="experience-updated">

@@ -36,7 +36,7 @@ export function ProjectCard({
   index = 0,
   repoLink,
   demoLink,
-  demoLabel = 'Live Deployment',
+  demoLabel = 'Try it live',
   image,
   imageAlt,
   featured = false,
@@ -134,7 +134,7 @@ export function ProjectCard({
           <div className="project-links" style={{ transform: 'translateZ(28px)' }}>
             {repoLink && (
               <a href={repoLink} className="project-link" target="_blank" rel="noreferrer">
-                <span>Engineering Source</span>
+                <span>Source code</span>
                 <ExternalLink size={14} aria-hidden="true" />
               </a>
             )}

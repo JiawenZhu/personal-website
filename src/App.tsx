@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { Mail, ChevronDown, Code, Database, Sparkles, Gamepad2, Monitor, Moon, Sun, ArrowUpRight } from 'lucide-react'
+import { motion, useReducedMotion } from 'framer-motion'
+import { Mail, Check, Code, Database, Sparkles, Gamepad2, Monitor, Moon, Sun } from 'lucide-react'
 import { Experience } from './components/Experience'
 import { ProjectCard } from './components/ProjectCard'
-import { Reveal } from './components/Reveal'
+import { NowBuilding } from './components/NowBuilding'
+import { CommitCity } from './components/CommitCity'
 import './App.css'
 
 const Github = ({ size = 20 }: { size?: number }) => (
@@ -30,11 +31,9 @@ const getInitialTheme = (): ThemePreference => {
 }
 
 function App() {
-  const [isLoaded, setIsLoaded] = useState(false)
   const [themePreference, setThemePreference] = useState<ThemePreference>(getInitialTheme)
 
   useEffect(() => {
-    setIsLoaded(true)
     document.documentElement.style.scrollBehavior = 'smooth'
   }, [])
 
@@ -60,23 +59,18 @@ function App() {
   }, [themePreference])
 
   return (
-    <motion.div 
-      className="app"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: isLoaded ? 1 : 0 }}
-      transition={{ duration: 1 }}
-    >
-      <div className="grid-overlay" />
-      
-      {/* Background Glows */}
-      <div className="glow" style={{ top: '-10%', left: '-5%' }} />
-      <div className="glow" style={{ bottom: '10%', right: '5%' }} />
-
+    <div className="app">
       <header className="navbar">
         <nav className="container">
-          <div className="logo">Jiawen Zhu</div>
+          <a href="#top" className="logo" aria-label="Jiawen Zhu, back to top">
+            <span className="logo-blocks" aria-hidden="true">
+              <i /><i /><i /><i />
+            </span>
+            Jiawen Zhu
+          </a>
           <ul className="nav-links">
-            <li><a href="#projects">Projects</a></li>
+            <li><a href="#projects">Work</a></li>
+            <li><a href="#city">Commit city</a></li>
             <li><a href="#experience">Experience</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
@@ -84,71 +78,52 @@ function App() {
         </nav>
       </header>
 
-      <main>
-        {/* Hero Section */}
+      <main id="top">
         <section className="hero container">
           <motion.div
             className="hero-copy"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="badge">Full-Stack Engineer</span>
-            <h1>I build AI products that feel <span className="highlight">intuitive, fast, and easy to use.</span></h1>
+            <h1>Hi, I'm Jiawen. I build AI products that feel easy to use.</h1>
             <p className="hero-sub">
-              I'm a full-stack engineer who loves turning complex data into clean, trustworthy experiences. 
-              Whether it's an AI agent or cloud infrastructure, I focus on the small details that make 
-              software actually feel good to use.
+              I'm a full-stack engineer who turns complex data into clean, trustworthy products, from AI agents to
+              cloud infrastructure. I sweat the small details that make software feel good.
             </p>
+
+            <NowBuilding />
+
             <div className="hero-actions">
-              <a href="#projects" className="btn btn-primary">View Projects</a>
+              <a href="#projects" className="btn btn-primary">See my work</a>
               <div className="social-links">
-                <a href="https://github.com/JiawenZhu" target="_blank" rel="noreferrer"><Github size={20} /></a>
-                <a href="https://linkedin.com/in/jiawenzhu" target="_blank" rel="noreferrer"><Linkedin size={20} /></a>
-                <a href="mailto:zhujiawen519@gmail.com"><Mail size={20} /></a>
+                <a href="https://github.com/JiawenZhu" target="_blank" rel="noreferrer" aria-label="GitHub"><Github size={20} /></a>
+                <a href="https://linkedin.com/in/jiawenzhu" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={20} /></a>
+                <a href="mailto:zhujiawen519@gmail.com" aria-label="Email"><Mail size={20} /></a>
               </div>
             </div>
           </motion.div>
 
-          <motion.div
-            className="hero-visual"
-            initial={{ opacity: 0, scale: 0.96, y: 24 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ delay: 0.15, duration: 0.8, ease: "easeOut" }}
-            aria-hidden="true"
-          >
-            {/* Above the fold and the LCP element — fetch it ahead of the lazy project shots.
-                No width/height attributes: they are presentational hints that set CSS height,
-                which cancels the aspect-ratio: 0.68/1 crop this image relies on. */}
-            <img src={assetUrl('hero-google-photo.webp')} alt="" fetchPriority="high" />
-          </motion.div>
-          
-          <motion.div 
-            className="hero-scroll"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 1 }}
-          >
-            <ChevronDown />
-          </motion.div>
+          <Polaroid />
         </section>
 
-        {/* Projects Section */}
+        <CommitCity />
+
         <section id="projects" className="section container">
-          <Reveal className="section-header">
-            <h2>Technical Implementations</h2>
-            <p>Deep-dives into algorithmic complexity and system architecture.</p>
-          </Reveal>
+          <div className="section-header">
+            <h2>Things I've shipped</h2>
+            <p>Games, career tools, and data experiments. Tilt the cards; they like it.</p>
+          </div>
 
           <div className="projects-grid">
             <ProjectCard
               index={0}
               featured
               title="CCAF Quest"
-              description="A walkable 3D city that turns Claude Certified Architect exam prep into a mission game. 45 missions across 5 exam domains, each anchored to a real building — walk in, take the briefing, answer, earn XP. Readiness is weighted by each domain's true share of the exam."
+              description="A walkable 3D city that turns Claude Certified Architect exam prep into a mission game. 45 missions across 5 exam domains, each anchored to a real building: walk in, take the briefing, answer, earn XP. Readiness is weighted by each domain's true share of the exam."
               tags={["Three.js", "React", "WebGL", "Game Design", "Learning"]}
               demoLink="https://careervivid.app/learning/"
-              demoLabel="Play the City"
+              demoLabel="Play the city"
               icon={<Gamepad2 size={24} />}
               image={assetUrl('project-screenshots/ccaf-quest.webp')}
               imageAlt="CCAF Quest 3D city with a player character walking toward a glowing mission beacon"
@@ -159,7 +134,7 @@ function App() {
             <ProjectCard
               index={1}
               title="MegaMillions Engine"
-              description="A high-performance statistical engine that processes historical lottery data using weighted sampling and recency decay algorithms to generate composite scores for predictive modeling."
+              description="A statistical engine that scores historical lottery data with weighted sampling, recency decay, and a Thompson-sampling bandit on top. The lottery is still winning, but now with charts."
               tags={["TypeScript", "Algorithms", "Statistics", "Data Processing"]}
               repoLink="https://github.com/JiawenZhu/megamillions-engine"
               icon={<Database size={24} />}
@@ -184,7 +159,7 @@ function App() {
             <ProjectCard
               index={3}
               title="TeamUSA Gemini Analyst"
-              description="Analytical platform for athletic performance. Integrates Gemini AI for archetype classification and provides data visualizations for competitive intelligence."
+              description="Matches you to an athlete archetype from 120 years of Team USA Olympic history, with Gemini classifying archetypes and data visualizations for competitive intelligence."
               tags={["Gemini AI", "Data Analytics", "React", "Competitive Intel"]}
               repoLink="https://github.com/JiawenZhu/teamusa-gemini-analyst"
               demoLink="https://teamusa-8b1ba.web.app/"
@@ -196,90 +171,84 @@ function App() {
           </div>
         </section>
 
-        {/* Technical Expertise Section */}
-        <section className="section container">
-          <div className="grid-2">
-            <Reveal className="expertise-text">
-              <h2>Technical Expertise</h2>
-              <p>Specializing in building robust, scalable applications with a focus on data integrity and algorithmic efficiency.</p>
-              <div className="skills-grid">
-                <div className="skill-category">
-                  <h4>Backend & Algorithms</h4>
-                  <ul>
-                    <li>Node.js / TypeScript</li>
-                    <li>Python / Data Science</li>
-                    <li>Statistical Modeling</li>
-                    <li>SQL / Firebase</li>
-                  </ul>
-                </div>
-                <div className="skill-category">
-                  <h4>Frontend & Design</h4>
-                  <ul>
-                    <li>React / Next.js</li>
-                    <li>CSS / Design Systems</li>
-                    <li>Framer Motion</li>
-                    <li>UX Research</li>
-                  </ul>
-                </div>
-              </div>
-            </Reveal>
-            <Reveal className="expertise-visual" delay={0.12}>
-              {/* Subtle engineered visualization */}
-              <div className="code-block-mock">
-                <div className="code-header">
-                  <div className="dot red" />
-                  <div className="dot yellow" />
-                  <div className="dot green" />
-                </div>
-                <div className="code-content">
-                  <pre>
-                    <code>{`function scoreCandidate(data) {
-  const recency = Math.exp(-0.1 * data.age);
-  const weight = data.frequency * recency;
-  return weight * (data.score + data.bonus);
-}`}</code>
-                  </pre>
-                </div>
-              </div>
-            </Reveal>
-          </div>
-        </section>
-
         <Experience />
 
-        {/* Contact Section */}
         <section id="contact" className="section container">
-          <Reveal className="contact-card">
-            <span className="section-kicker">Get in touch</span>
+          <div className="contact-card">
             <h2>Let's build something worth using.</h2>
             <p>
-              I'm open to full-stack and AI product roles, and I always enjoy talking through a hard
-              data or interface problem. The fastest way to reach me is email.
+              I'm open to full-stack and AI product roles, and I always enjoy talking through a hard data or
+              interface problem. Email is the fastest way to reach me.
             </p>
             <div className="contact-actions">
-              <a className="btn btn-primary" href="mailto:zhujiawen519@gmail.com">
-                <Mail size={18} aria-hidden="true" />
-                <span>zhujiawen519@gmail.com</span>
-              </a>
+              <CopyEmail />
               <a className="btn btn-ghost" href="https://github.com/JiawenZhu" target="_blank" rel="noreferrer">
                 <Github size={18} />
                 <span>GitHub</span>
-                <ArrowUpRight size={15} aria-hidden="true" />
               </a>
               <a className="btn btn-ghost" href="https://linkedin.com/in/jiawenzhu" target="_blank" rel="noreferrer">
                 <Linkedin size={18} />
                 <span>LinkedIn</span>
-                <ArrowUpRight size={15} aria-hidden="true" />
               </a>
             </div>
-          </Reveal>
+          </div>
         </section>
       </main>
 
       <footer className="footer container">
-        <p>&copy; {new Date().getFullYear()} Jiawen Zhu. Engineered with precision.</p>
+        <p>&copy; {new Date().getFullYear()} Jiawen Zhu. Built with React and a lot of blocks.</p>
       </footer>
-    </motion.div>
+    </div>
+  )
+}
+
+const EMAIL = 'zhujiawen519@gmail.com'
+
+function CopyEmail() {
+  const [copied, setCopied] = useState(false)
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(EMAIL)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2200)
+    } catch {
+      window.location.href = `mailto:${EMAIL}`
+    }
+  }
+
+  return (
+    <button type="button" className="btn btn-primary" onClick={copy}>
+      {copied ? <Check size={18} aria-hidden="true" /> : <Mail size={18} aria-hidden="true" />}
+      <span aria-live="polite">{copied ? 'Email copied' : 'Copy my email'}</span>
+    </button>
+  )
+}
+
+/** The hero photo as a polaroid you can toss around; it springs back home. */
+function Polaroid() {
+  const reduceMotion = useReducedMotion()
+  // Touch drags would hijack page scrolling, so only mice and trackpads get to play.
+  const [canDrag] = useState(() => window.matchMedia('(pointer: fine)').matches)
+  const draggable = canDrag && !reduceMotion
+
+  return (
+    <motion.figure
+      className="polaroid"
+      initial={{ opacity: 0, rotate: 0, y: 30 }}
+      animate={{ opacity: 1, rotate: 3, y: 0 }}
+      transition={{ delay: 0.15, type: 'spring', stiffness: 120, damping: 14 }}
+      drag={draggable}
+      dragSnapToOrigin
+      dragElastic={0.6}
+      whileDrag={{ rotate: -6, scale: 1.04, cursor: 'grabbing' }}
+    >
+      <span className="tape" aria-hidden="true" />
+      {/* Above the fold and the LCP element, so fetch it ahead of the lazy project shots.
+          No width/height attributes: they set CSS height and cancel the aspect-ratio crop. */}
+      <img src={assetUrl('hero-google-photo.webp')} alt="Jiawen, in a cap, giving a thumbs up in front of a wall of colourful foam blocks" fetchPriority="high" draggable={false} />
+      <figcaption>{draggable ? 'Drag me around' : "That's me in the cap"}</figcaption>
+    </motion.figure>
   )
 }
 
