@@ -43,7 +43,9 @@ let request: Promise<NowData> | null = null;
 
 /** One shared request for every component that needs the live data. */
 export function fetchNow(): Promise<NowData> {
-  request ??= fetch(NOW_URL, { headers: { Accept: "application/json" } }).then((response) => {
+  // "no-cache" revalidates with the CDN on every visit (a cheap 304 when nothing
+  // changed), so a browser never sits on an old project or a stale error.
+  request ??= fetch(NOW_URL, { cache: "no-cache", headers: { Accept: "application/json" } }).then((response) => {
     if (!response.ok) throw new Error(`now.json request failed with status ${response.status}.`);
     return response.json() as Promise<NowData>;
   });
