@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { Mail, Check, Box, Code, Database, Sparkles, Gamepad2, Monitor, Moon, Sun } from 'lucide-react'
+import { Mail, Check, Box, Rabbit, Code, Database, Sparkles, Gamepad2, Monitor, Moon, Sun } from 'lucide-react'
 import { Experience } from './components/Experience'
 import { ProjectCard } from './components/ProjectCard'
 import { NowBuilding } from './components/NowBuilding'
@@ -135,6 +135,22 @@ function App() {
             </ProjectCard>
             <ProjectCard
               index={1}
+              featured
+              title="Bunny Escape"
+              description="A rescue-and-run game for iPhone and iPad. Sneak grey bunny Bubu through 8 monster houses without waking the beast, smash the cage holding Doudou, then outrun the monster together down winding roads with bridges, boulders, and lava rivers."
+              tags={["Three.js", "Capacitor", "Web Audio", "3D Craft models", "iOS"]}
+              demoLink="https://bunny-escape-2026.web.app"
+              demoLabel="Visit the game site"
+              comingSoon="Coming soon on the App Store"
+              icon={<Rabbit size={24} />}
+              image={assetUrl('project-screenshots/bunny-escape.webp')}
+              imageAlt="Bubu and Doudou, two cartoon bunnies, sneaking through a moonlit forest with a lantern"
+              metrics={{ worlds: "8 monster houses", audio: "100% synthesized" }}
+            >
+              <BunnyTech />
+            </ProjectCard>
+            <ProjectCard
+              index={2}
               title="CCAF Quest"
               description="A walkable 3D city that turns Claude Certified Architect exam prep into a mission game. 45 missions across 5 exam domains, each anchored to a real building: walk in, take the briefing, answer, earn XP. Readiness is weighted by each domain's true share of the exam."
               tags={["Three.js", "React", "WebGL", "Game Design", "Learning"]}
@@ -148,7 +164,7 @@ function App() {
               <DomainMeter />
             </ProjectCard>
             <ProjectCard
-              index={2}
+              index={3}
               title="MegaMillions Engine"
               description="A statistical engine that scores historical lottery data with weighted sampling, recency decay, and a Thompson-sampling bandit on top. The lottery is still winning, but now with charts."
               tags={["TypeScript", "Algorithms", "Statistics", "Data Processing"]}
@@ -161,7 +177,7 @@ function App() {
               <AlgorithmPreview />
             </ProjectCard>
             <ProjectCard
-              index={3}
+              index={4}
               title="CareerVivid"
               description="A full-stack career platform that rehearses the whole job hunt. Mock interviews replay the real staged loop for 301 companies, a 12-course curriculum runs 203 hands-on lessons, and AI-parsed resume tailoring plus a Node.js CLI automate the paperwork around it."
               tags={["React", "Firebase", "Vertex AI", "Node.js", "CLI"]}
@@ -173,7 +189,7 @@ function App() {
               metrics={{ companies: "301 interview loops", backend: "Firebase + Vertex AI" }}
             />
             <ProjectCard
-              index={4}
+              index={5}
               title="TeamUSA Gemini Analyst"
               description="Matches you to an athlete archetype from 120 years of Team USA Olympic history, with Gemini classifying archetypes and data visualizations for competitive intelligence."
               tags={["Gemini AI", "Data Analytics", "React", "Competitive Intel"]}
@@ -310,6 +326,34 @@ function CraftPipeline() {
         <li key={step}>{step}</li>
       ))}
     </ol>
+  )
+}
+
+const BUNNY_SHOTS = [
+  { file: 'bunny-escape-jump-dash.webp', label: 'Dash past the hazard warnings' },
+  { file: 'bunny-escape-bomb.webp', label: 'Bomb the monster behind you' },
+  { file: 'bunny-escape-collect.webp', label: 'Grab pinecones and carrots' },
+]
+
+/** Gameplay shots plus how it's built, since the repo itself is private. */
+function BunnyTech() {
+  return (
+    <div className="bunny-tech">
+      <ul className="bunny-shots">
+        {BUNNY_SHOTS.map((shot) => (
+          <li key={shot.file}>
+            <img src={assetUrl(`project-screenshots/${shot.file}`)} alt={shot.label} loading="lazy" />
+          </li>
+        ))}
+      </ul>
+      <ul className="bunny-notes">
+        <li>Pure Three.js ES modules with no build step, wrapped in Capacitor for iOS</li>
+        <li>Characters modeled in 3D Craft and animated with vertex shaders</li>
+        <li>Every sound and the music synthesized live with the Web Audio API</li>
+        <li>Hazard radar warns about boulders about 4 seconds ahead</li>
+        <li>Fully bilingual in English and Chinese</li>
+      </ul>
+    </div>
   )
 }
 

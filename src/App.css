@@ -719,6 +719,7 @@
 .project-card-shell:nth-child(3) .project-icon { background: var(--yellow); }
 .project-card-shell:nth-child(4) .project-icon { background: var(--red); }
 .project-card-shell:nth-child(5) .project-icon { background: var(--green); }
+.project-card-shell:nth-child(6) .project-icon { background: var(--blue); }
 
 /* The newest project spans the grid, screenshot beside the story. */
 .project-card-shell.featured {
@@ -735,6 +736,19 @@
 
 .project-card-shell.featured .project-image-frame {
   margin-bottom: 0;
+}
+
+/* Alternate sides when two featured cards stack. */
+.project-card-shell.featured + .project-card-shell.featured .project-card {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+}
+
+.project-card-shell.featured + .project-card-shell.featured .project-image-frame {
+  order: 2;
+}
+
+.project-card-shell.featured + .project-card-shell.featured .project-card-body {
+  padding: 0.5rem 0 0.5rem 0.75rem;
 }
 
 .project-card-shell.featured .project-card-body {
@@ -827,6 +841,18 @@
   text-decoration-color: var(--yellow);
 }
 
+.project-soon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.1rem 0.7rem;
+  border: 2px dashed var(--edge);
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
 .project-link.store {
   text-decoration-color: var(--green);
 }
@@ -867,6 +893,59 @@
   width: 0.9rem;
   border-top: 3px solid var(--edge);
 }
+
+/* Bunny Escape: gameplay shots and build notes */
+.bunny-tech {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem;
+  align-items: center;
+}
+
+.bunny-shots {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.bunny-shots img {
+  display: block;
+  width: 54px;
+  aspect-ratio: 660 / 1434;
+  object-fit: cover;
+  border: 2px solid var(--edge);
+  border-radius: 8px;
+}
+
+.bunny-shots li:nth-child(2) img {
+  transform: translateY(-6px);
+}
+
+.bunny-notes {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.bunny-notes li {
+  position: relative;
+  padding-left: 1rem;
+}
+
+.bunny-notes li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--green);
+}
+
+.bunny-notes li:nth-child(2)::before { background: var(--blue); }
+.bunny-notes li:nth-child(3)::before { background: var(--yellow); }
+.bunny-notes li:nth-child(4)::before { background: var(--red); }
 
 /* MegaMillions: bandit picks a block */
 .algo-preview {
@@ -1320,6 +1399,10 @@
     position: static;
   }
 
+  .project-card-shell.featured + .project-card-shell.featured .project-image-frame {
+    order: 0;
+  }
+
   .project-card-shell.featured .project-card {
     display: flex;
     gap: 0;
@@ -1396,6 +1479,10 @@
 
   .domain-track {
     display: none;
+  }
+
+  .bunny-tech {
+    grid-template-columns: 1fr;
   }
 
   .experience-item {

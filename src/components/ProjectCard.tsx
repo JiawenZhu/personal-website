@@ -25,6 +25,8 @@ export type ProjectCardProps = {
   demoLink?: string
   demoLabel?: string
   appStoreLink?: string
+  /** Shown as a plain label when the store page isn't live yet. */
+  comingSoon?: string
   image?: string
   imageAlt?: string
   featured?: boolean
@@ -42,6 +44,7 @@ export function ProjectCard({
   demoLink,
   demoLabel = 'Try it live',
   appStoreLink,
+  comingSoon,
   image,
   imageAlt,
   featured = false,
@@ -155,6 +158,12 @@ export function ProjectCard({
                 <span>Get it on the App Store</span>
                 <Smartphone size={14} aria-hidden="true" />
               </a>
+            )}
+            {comingSoon && (
+              <span className="project-soon">
+                <Smartphone size={14} aria-hidden="true" />
+                {comingSoon}
+              </span>
             )}
           </div>
         </div>
