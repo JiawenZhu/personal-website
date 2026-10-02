@@ -7,7 +7,7 @@ import {
   useSpring,
   useTransform,
 } from 'framer-motion'
-import { ExternalLink, Globe } from 'lucide-react'
+import { ExternalLink, Globe, Smartphone } from 'lucide-react'
 
 const MAX_TILT = 7
 const springConfig = { stiffness: 220, damping: 24, mass: 0.5 }
@@ -21,6 +21,7 @@ export type ProjectCardProps = {
   repoLink?: string
   demoLink?: string
   demoLabel?: string
+  appStoreLink?: string
   image?: string
   imageAlt?: string
   featured?: boolean
@@ -37,6 +38,7 @@ export function ProjectCard({
   repoLink,
   demoLink,
   demoLabel = 'Try it live',
+  appStoreLink,
   image,
   imageAlt,
   featured = false,
@@ -142,6 +144,12 @@ export function ProjectCard({
               <a href={demoLink} className="project-link demo" target="_blank" rel="noreferrer">
                 <span>{demoLabel}</span>
                 <Globe size={14} aria-hidden="true" />
+              </a>
+            )}
+            {appStoreLink && (
+              <a href={appStoreLink} className="project-link store" target="_blank" rel="noreferrer">
+                <span>Get it on the App Store</span>
+                <Smartphone size={14} aria-hidden="true" />
               </a>
             )}
           </div>

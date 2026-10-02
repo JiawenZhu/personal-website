@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { Mail, Check, Code, Database, Sparkles, Gamepad2, Monitor, Moon, Sun } from 'lucide-react'
+import { Mail, Check, Box, Code, Database, Sparkles, Gamepad2, Monitor, Moon, Sun } from 'lucide-react'
 import { Experience } from './components/Experience'
 import { ProjectCard } from './components/ProjectCard'
 import { NowBuilding } from './components/NowBuilding'
@@ -119,6 +119,22 @@ function App() {
             <ProjectCard
               index={0}
               featured
+              title="3D Craft"
+              description="An AI studio for iPhone and the web that turns an idea or a reference image into concept art, then into a 3D model you can light, inspect, animate, and drop into a game. Pick from engines like Tripo, Rodin, TRELLIS.2, and Hunyuan3D, and see the token quote before anything generates."
+              tags={["SwiftUI", "React", "Firebase", "fal.ai", "3D Generation"]}
+              repoLink="https://github.com/JiawenZhu/3D-Craft"
+              demoLink="https://3d-craft.web.app"
+              demoLabel="Open the web studio"
+              appStoreLink="https://apps.apple.com/us/app/3d-craft-ai-3d-model-maker/id6811466883"
+              icon={<Box size={24} />}
+              image={assetUrl('project-screenshots/3d-craft.webp')}
+              imageAlt="Three 3D Craft iPhone screens: a lantern-carrying cat explorer, a blue baby dragon, and a finished obsidian dragon model in the 3D studio"
+              metrics={{ platforms: "iPhone, iPad, web", engines: "9 image-to-3D options" }}
+            >
+              <CraftPipeline />
+            </ProjectCard>
+            <ProjectCard
+              index={1}
               title="CCAF Quest"
               description="A walkable 3D city that turns Claude Certified Architect exam prep into a mission game. 45 missions across 5 exam domains, each anchored to a real building: walk in, take the briefing, answer, earn XP. Readiness is weighted by each domain's true share of the exam."
               tags={["Three.js", "React", "WebGL", "Game Design", "Learning"]}
@@ -132,7 +148,7 @@ function App() {
               <DomainMeter />
             </ProjectCard>
             <ProjectCard
-              index={1}
+              index={2}
               title="MegaMillions Engine"
               description="A statistical engine that scores historical lottery data with weighted sampling, recency decay, and a Thompson-sampling bandit on top. The lottery is still winning, but now with charts."
               tags={["TypeScript", "Algorithms", "Statistics", "Data Processing"]}
@@ -145,7 +161,7 @@ function App() {
               <AlgorithmPreview />
             </ProjectCard>
             <ProjectCard
-              index={2}
+              index={3}
               title="CareerVivid"
               description="A full-stack career platform that rehearses the whole job hunt. Mock interviews replay the real staged loop for 301 companies, a 12-course curriculum runs 203 hands-on lessons, and AI-parsed resume tailoring plus a Node.js CLI automate the paperwork around it."
               tags={["React", "Firebase", "Vertex AI", "Node.js", "CLI"]}
@@ -157,7 +173,7 @@ function App() {
               metrics={{ companies: "301 interview loops", backend: "Firebase + Vertex AI" }}
             />
             <ProjectCard
-              index={3}
+              index={4}
               title="TeamUSA Gemini Analyst"
               description="Matches you to an athlete archetype from 120 years of Team USA Olympic history, with Gemini classifying archetypes and data visualizations for competitive intelligence."
               tags={["Gemini AI", "Data Analytics", "React", "Competitive Intel"]}
@@ -281,6 +297,19 @@ function ThemeSwitcher({ value, onChange }: { value: ThemePreference; onChange: 
         )
       })}
     </div>
+  )
+}
+
+/** 3D Craft's creation flow, in the order the app walks you through it. */
+const CRAFT_STEPS = ['Idea', 'Concept art', '3D model', 'Game']
+
+function CraftPipeline() {
+  return (
+    <ol className="craft-pipeline" aria-label="3D Craft creation steps">
+      {CRAFT_STEPS.map((step) => (
+        <li key={step}>{step}</li>
+      ))}
+    </ol>
   )
 }
 
