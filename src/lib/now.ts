@@ -1,4 +1,4 @@
-// Live "what I'm building" data, written every few hours by the Action in the
+// Live "what I'm building" data, written once a day by the Action in the
 // JiawenZhu/JiawenZhu profile repo (scripts/refresh-profile.mjs). The profile
 // README and this site read the same file, so they always agree.
 

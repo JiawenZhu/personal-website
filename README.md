@@ -13,7 +13,7 @@ I'm the creator of **<a href="https://github.com/JiawenZhu/CareerVivid" target="
 
 <img src="https://raw.githubusercontent.com/JiawenZhu/JiawenZhu/main/assets/commit-city.svg" alt="My commit city: one block per day of GitHub contributions" width="100%">
 
-Both cards are redrawn every few hours by the Action in [JiawenZhu/JiawenZhu](https://github.com/JiawenZhu/JiawenZhu). The site's hero and commit city read the same `now.json`.
+Both cards are redrawn once a day by the Action in [JiawenZhu/JiawenZhu](https://github.com/JiawenZhu/JiawenZhu). The site's hero and commit city read the same `now.json`.
 
 ### 🚀 Featured Projects
 
