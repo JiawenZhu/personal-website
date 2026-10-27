@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { Mail, Check, Box, Rabbit, Code, Database, Sparkles, Gamepad2, Monitor, Moon, Sun } from 'lucide-react'
+import { Mail, Check, Box, Rabbit, Refrigerator, Code, Database, Sparkles, Gamepad2, Monitor, Moon, Sun } from 'lucide-react'
 import { Experience } from './components/Experience'
 import { ProjectCard } from './components/ProjectCard'
 import { NowBuilding } from './components/NowBuilding'
@@ -137,11 +137,11 @@ function App() {
               index={1}
               featured
               title="Bunny Escape"
-              description="A rescue-and-run game for iPhone and iPad. Sneak grey bunny Bubu through 8 monster houses without waking the beast, smash the cage holding Doudou, then outrun the monster together down winding roads with bridges, boulders, and lava rivers."
+              description="A rescue-and-run game for iPhone and iPad, now on the App Store. Sneak grey bunny Bubu through 8 monster houses without waking the beast, smash the cage holding Doudou, then outrun the monster together down winding roads with bridges, boulders, and lava rivers."
               tags={["Three.js", "Capacitor", "Web Audio", "3D Craft models", "iOS"]}
               demoLink="https://bunny-escape-2026.web.app"
               demoLabel="Visit the game site"
-              comingSoon="Coming soon on the App Store"
+              appStoreLink="https://apps.apple.com/us/app/bunny-escape-forest-rescue/id6817218343"
               icon={<Rabbit size={24} />}
               image={assetUrl('project-screenshots/bunny-escape.webp')}
               imageAlt="Bubu and Doudou, two cartoon bunnies, sneaking through a moonlit forest with a lantern"
@@ -151,6 +151,22 @@ function App() {
             </ProjectCard>
             <ProjectCard
               index={2}
+              featured
+              title="Little Fridge"
+              description="A visual fridge and freezer for iPhone. Swing open the doors to see what you have, get reminded before food expires, and see what your groceries cost each month. Snap a receipt or a shelf to add food, and share one fridge with the whole family."
+              tags={["SwiftUI", "Vision OCR", "Apple Pay", "Firebase", "iOS"]}
+              demoLink="https://little-fridge-2026.web.app"
+              demoLabel="Visit the app site"
+              comingSoon="Coming soon on the App Store"
+              icon={<Refrigerator size={24} />}
+              image={assetUrl('project-screenshots/little-fridge.webp')}
+              imageAlt="Three Little Fridge iPhone screens: a stainless fridge with french doors, the open fridge with labelled food on shelves, and a list of items with days left"
+              metrics={{ catalog: "142 USDA-verified foods", sync: "Shared family fridge" }}
+            >
+              <FridgeTech />
+            </ProjectCard>
+            <ProjectCard
+              index={3}
               title="CCAF Quest"
               description="A walkable 3D city that turns Claude Certified Architect exam prep into a mission game. 45 missions across 5 exam domains, each anchored to a real building: walk in, take the briefing, answer, earn XP. Readiness is weighted by each domain's true share of the exam."
               tags={["Three.js", "React", "WebGL", "Game Design", "Learning"]}
@@ -164,7 +180,7 @@ function App() {
               <DomainMeter />
             </ProjectCard>
             <ProjectCard
-              index={3}
+              index={4}
               title="MegaMillions Engine"
               description="A statistical engine that scores historical lottery data with weighted sampling, recency decay, and a Thompson-sampling bandit on top. The lottery is still winning, but now with charts."
               tags={["TypeScript", "Algorithms", "Statistics", "Data Processing"]}
@@ -177,7 +193,7 @@ function App() {
               <AlgorithmPreview />
             </ProjectCard>
             <ProjectCard
-              index={4}
+              index={5}
               title="CareerVivid"
               description="A full-stack career platform that rehearses the whole job hunt. Mock interviews replay the real staged loop for 301 companies, a 12-course curriculum runs 203 hands-on lessons, and AI-parsed resume tailoring plus a Node.js CLI automate the paperwork around it."
               tags={["React", "Firebase", "Vertex AI", "Node.js", "CLI"]}
@@ -189,7 +205,7 @@ function App() {
               metrics={{ companies: "301 interview loops", backend: "Firebase + Vertex AI" }}
             />
             <ProjectCard
-              index={5}
+              index={6}
               title="TeamUSA Gemini Analyst"
               description="Matches you to an athlete archetype from 120 years of Team USA Olympic history, with Gemini classifying archetypes and data visualizations for competitive intelligence."
               tags={["Gemini AI", "Data Analytics", "React", "Competitive Intel"]}
@@ -354,6 +370,19 @@ function BunnyTech() {
         <li>Fully bilingual in English and Chinese</li>
       </ul>
     </div>
+  )
+}
+
+/** How Little Fridge is built, since its repo is private. */
+function FridgeTech() {
+  return (
+    <ul className="bunny-notes">
+      <li>Native SwiftUI with a 3D swing-door fridge and a pull-out freezer drawer</li>
+      <li>On-device Vision OCR reads receipts and shelf photos</li>
+      <li>Every catalog item calibrated against USDA FoodData Central</li>
+      <li>Apple Pay purchases itemized into monthly spending charts</li>
+      <li>Real-time sync so a family shares one fridge</li>
+    </ul>
   )
 }
 

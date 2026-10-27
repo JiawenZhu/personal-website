@@ -720,6 +720,7 @@
 .project-card-shell:nth-child(4) .project-icon { background: var(--red); }
 .project-card-shell:nth-child(5) .project-icon { background: var(--green); }
 .project-card-shell:nth-child(6) .project-icon { background: var(--blue); }
+.project-card-shell:nth-child(7) .project-icon { background: var(--yellow); }
 
 /* The newest project spans the grid, screenshot beside the story. */
 .project-card-shell.featured {
@@ -738,16 +739,16 @@
   margin-bottom: 0;
 }
 
-/* Alternate sides when two featured cards stack. */
-.project-card-shell.featured + .project-card-shell.featured .project-card {
+/* Alternate sides as featured cards stack. */
+.project-card-shell.featured:nth-child(even) .project-card {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
 }
 
-.project-card-shell.featured + .project-card-shell.featured .project-image-frame {
+.project-card-shell.featured:nth-child(even) .project-image-frame {
   order: 2;
 }
 
-.project-card-shell.featured + .project-card-shell.featured .project-card-body {
+.project-card-shell.featured:nth-child(even) .project-card-body {
   padding: 0.5rem 0 0.5rem 0.75rem;
 }
 
@@ -1399,7 +1400,7 @@
     position: static;
   }
 
-  .project-card-shell.featured + .project-card-shell.featured .project-image-frame {
+  .project-card-shell.featured:nth-child(even) .project-image-frame {
     order: 0;
   }
 
